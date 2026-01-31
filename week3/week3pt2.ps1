@@ -1,6 +1,6 @@
 ﻿# Get login and logoff records from win events
 
-#fetching last 14 days
+#fetching last X days
 $loginouts=Get-EventLog -LogName System -source Microsoft-Windows-WinLogon -After (Get-Date).AddDays(-14)
 
 $loginoutsTable=@() #empty array to fill custom
