@@ -24,7 +24,7 @@ while($operation){
     elseif($choose -eq 2){
 
         $days = Read-Host "Number of days of logs to fetch for failed logins"
-        getFailedLogins $days
+        getFailedLogins $days| Format-Table -AutoSize
     
     }
 
