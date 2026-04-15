@@ -2,7 +2,7 @@
 clear
 
 # filling courses.txt
-bash courses.bash
+bash Courses.bash
 
 courseFile="courses.txt"
 
@@ -36,7 +36,19 @@ echo ""
 # Add function to the menu
 # Example input: JOYC 310
 # Example output: See the screenshots in canvas
+displaysameLocation(){
 
+	echo "input location (ex. FREE 105)"
+	read location
+
+	echo ""
+	echo "courses in $location :"
+	echo ""
+	grep "$location" "$courseFile" | awk -F';' '{
+		print $1" | "$2" | "$5" | "$6" | "$7
+	}'
+	echo ""
+}
 # TODO - 2
 # Make a function that displays all the courses that has availability
 # (seat number will be more than 0) for the given course code
@@ -44,12 +56,23 @@ echo ""
 # Example input: SEC
 # Example output: See the screenshots in canvas
 
+displayAvailability(){
+
+	echo "Input a course (ex. SEC)"
+	read courselist
+
+	echo ""
+	awk -F';' -v course="$courseList" 'BEGIN{OFS=" | "} $0 ~ course && $4 > 0 {print $1,$2,$3,$4,$5,$6,$7,$8,$9,$10}' "$courseFile"
+	echo ""
+}
 while :
 do
 	echo ""
 	echo "Please select and option:"
 	echo "[1] Display courses of an instructor"
 	echo "[2] Display course count of instructors"
+	echo "[3] Display courses in a classroom"
+	echo "[4] Display available course subjects"
 	echo "[5] Exit"
 
 	read userInput
@@ -65,6 +88,15 @@ do
 	elif [[ "$userInput" == "2" ]]; then
 		courseCountofInsts
 
+	elif [[ "$userInput" == "3" ]]; then
+		displaysameLocation
+
+	elif [[ "$userInput" == "4" ]]; then
+		displayAvailability
 	# TODO - 3 Display a message, if an invalid input is given
+
+	else
+		echo "this is not a valid input"
+
 	fi
 done
